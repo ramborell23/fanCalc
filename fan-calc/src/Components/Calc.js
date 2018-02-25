@@ -117,7 +117,15 @@ class Calc extends React.Component {
     }
 
     handleRemoveFromList = e => {
-        
+        const {teamTradeArr2} = this.state
+        console.log("YUPP")
+        console.log(teamTradeArr2)
+        console.log("Value:=>>>",e.target.id)
+        let place = e.target.id
+        teamTradeArr2.splice(place,1)
+        this.setState({
+            teamTradeArr2:[...teamTradeArr2]
+        })
     }
     handleAddToTrade = e => {
         const {teamState2, teamTradeArr2}= this.state   
@@ -129,10 +137,18 @@ class Calc extends React.Component {
         console.log('Check this out 2 ', player)
         console.log('pop:    ',teamState2[player])
         // console.log(teamTradeArr2)
-        console.log('Being Traded:', typeof teamTradeArr2)
-        this.setState({
-            teamTradeArr2:[...teamTradeArr2,player]
-        })
+        
+        if(teamTradeArr2){
+            for(var i = 0; i < teamTradeArr2.length;i ++){
+                console.log('II',teamTradeArr2[i][teamTradeArr2.length-1])
+                console.log('popopoopopopopopop')
+            }
+            console.log(teamTradeArr2,"<======== JUST CHECKING ")
+            this.setState({
+                teamTradeArr2:[...teamTradeArr2,player]
+            })
+            }
+            console.log('Being Traded:',  this.state.teamTradeArr2)
  
     }
 
@@ -238,6 +254,7 @@ class Calc extends React.Component {
                     <br />
                     <TradeList
                         teamTradeArr={teamTradeArr2}
+                        handleCloseButton={this.handleRemoveFromList}
                     />
                     <br />
                     <br />

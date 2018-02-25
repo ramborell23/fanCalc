@@ -13,8 +13,8 @@ const TradeList = ({ teamTradeArr, handleCloseButton }) => {
             <ul>
                 {/* { teamTradeArr} */}
                 {nums}
-                {teamTradeArr.map((number) =>
-                    <li>{number[3]} <button onclick={handleCloseButton} class="close">x</button onclick={handleClodeButton}></li>
+                {teamTradeArr.map((number, index) =>
+                    <li key = {number[0]}>{number[3]} <button  id={index}onClick={handleCloseButton} className="close">x</button></li>
                 )}
             </ul>
             <br />
