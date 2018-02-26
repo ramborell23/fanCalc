@@ -117,52 +117,64 @@ class Calc extends React.Component {
     }
 
     handleRemoveFromList = e => {
-        const {teamTradeArr2} = this.state
-        console.log("YUPP")
-        console.log(teamTradeArr2)
-        console.log("Value:=>>>",e.target.id)
+        const { teamTradeArr2 } = this.state
         let place = e.target.id
-        teamTradeArr2.splice(place,1)
+        teamTradeArr2.splice(place, 1)
         this.setState({
-            teamTradeArr2:[...teamTradeArr2]
+            teamTradeArr2: [...teamTradeArr2]
         })
     }
     handleAddToTrade = e => {
-        const {teamState2, teamTradeArr2}= this.state   
-        console.log('Team Trade 2',teamState2)
+        const { teamState, teamTradeArr } = this.state
+        console.log('Team Trade 2', teamState)
+        let player = teamState[e.target.value]
+        // console.log(teamTradeArr2)
+
+        if (teamTradeArr) {
+            console.log('popopoopopopopopop')
+          
+            console.log(teamTradeArr, "<======== JUST CHECKING ")
+            this.setState({
+                teamTradeArr: [...teamTradeArr, player]
+            })
+        }
+        console.log('Being Traded:', this.state.teamTradeArr2)
+
+    }
+    handleAddToTrade2 = e => {
+        const { teamState2, teamTradeArr2 } = this.state
+        console.log('Team Trade 2', teamState2)
         let player = teamState2[e.target.value]
         // teamTradeArr2.push(player)
-        console.log('Team Trade 34342',teamState2)
-        console.log('Check this out ',typeof player)
+        console.log('Team Trade 34342', teamState2)
+        console.log('Check this out ', typeof player)
         console.log('Check this out 2 ', player)
-        console.log('pop:    ',teamState2[player])
+        console.log('pop:    ', teamState2[player])
         // console.log(teamTradeArr2)
-        
-        if(teamTradeArr2){
-            for(var i = 0; i < teamTradeArr2.length;i ++){
-                console.log('II',teamTradeArr2[i][teamTradeArr2.length-1])
+
+        if (teamTradeArr2) {
+            for (var i = 0; i < teamTradeArr2.length; i++) {
+                console.log('II', teamTradeArr2[i][teamTradeArr2.length - 1])
                 console.log('popopoopopopopopop')
             }
-            console.log(teamTradeArr2,"<======== JUST CHECKING ")
+            console.log(teamTradeArr2, "<======== JUST CHECKING ")
             this.setState({
-                teamTradeArr2:[...teamTradeArr2,player]
+                teamTradeArr2: [...teamTradeArr2, player]
             })
-            }
-            console.log('Being Traded:',  this.state.teamTradeArr2)
- 
+        }
+        console.log('Being Traded:', this.state.teamTradeArr2)
+
     }
 
     getTeamRoster = () => {
         const { teamArraySelect } = this.state
-        console.log(teams[nameJoinForFetch(teamArraySelect)])
-        console.log("TEAM ARR SELECT ", (teamArraySelect))
         axios
             .get(`https://stats.nba.com/stats/commonteamroster/?Season=2017-18&TeamID=${teams[nameJoinForFetch(teamArraySelect)]}`)
             .then(response => {
                 this.setState({
-                    teamState: response.data.resultSets[0].rowSet
+                    teamState: response.data.resultSets[0].rowSet,
+                    teamTradeArr: []
                 });
-                console.log(this.teamState)
             })
             .catch(err => {
                 console.log("error fetching image");
@@ -171,15 +183,13 @@ class Calc extends React.Component {
     };
     getTeamRoster2 = () => {
         const { teamArraySelect2 } = this.state
-        console.log(teams[nameJoinForFetch(teamArraySelect2)])
-        console.log("TEAM ARR SELECT ", (teamArraySelect2))
         axios
             .get(`https://stats.nba.com/stats/commonteamroster/?Season=2017-18&TeamID=${teams[nameJoinForFetch(teamArraySelect2)]}`)
             .then(response => {
                 this.setState({
-                    teamState2: response.data.resultSets[0].rowSet
+                    teamState2: response.data.resultSets[0].rowSet,
+                    teamTradeArr2: []
                 });
-                console.log(this.teamState)
             })
             .catch(err => {
                 console.log("error fetching image");
@@ -188,14 +198,10 @@ class Calc extends React.Component {
     };
 
     render() {
-        const { modeState, teamState, teamArraySelect, teamArraySelect2, playerSelect, teamState2, teamTradeArr2 } = this.state
+        const { modeState, teamState, teamArraySelect, teamArraySelect2, playerSelect, teamState2, teamTradeArr, teamTradeArr2 } = this.state
         console.log(modeState)
-        console.log('Trade Bait     ',teamTradeArr2)
+        console.log('Trade Bait     ', teamTradeArr)
         console.log("Team  ARR ", teamState)
-        // console.log("PLAY====>ERS ARR ", teams[nameJoinForFetch(teamArraySelect)])
-        console.log("PLAYRS ARR ", (playerSelect))
-        console.log("PLAYRS 2 ", (teamArraySelect))
-        console.log("PLAYRS  ", (teamArraySelect2))
 
         return (
             <div className='page'>
@@ -207,31 +213,27 @@ class Calc extends React.Component {
                         >NBA
                                 </button>
                         Team 1<br />
-                        <select value={teamArraySelect}
-                            name='teamArraySelect'
-                            onChange={this.handleBrandSelection}>
-                            {this.teamsArray.map(option => (
-                                <option value={option}>{option}</option>
-                            ))}
-                        </select>
-                        <br />
-                        Player<br />
-                        {/* <ul> */}
-                            {teamState.map(item => (
-                                // <li>
-                                    <button>
-                                        {item[0]}<br />
-                                        {item[1]}<br />
-                                        {item[2]}<br />
-                                        {item[3]}<br />
-                                        {item[4]}<br />
-                                    </button>
-                                // </li>
-                            ))}
-                        {/* </ul> */}
                     </label>
-                    <br />
-                    <br />
+                    <TeamBoard
+                        teamsArr={this.teamsArray}
+                        teamState={teamState}
+                        // name='teamArraySelect2'
+                        value={teamArraySelect}
+                        handleChange={this.handleBrandSelection}
+                        handleChange2={this.handleAddToTrade}
+                    />
+                </div>
+                <div className='main_container'>
+                    <TradeList
+                        teamTradeArr={teamTradeArr}
+                        handleCloseButton={this.handleRemoveFromList}
+                    />
+                </div>
+                <div className='main_container'>
+                    <TradeList
+                        teamTradeArr={teamTradeArr2}
+                        handleCloseButton={this.handleRemoveFromList}
+                    />
                 </div>
                 <div className='main_container'><br />
                     <label>
@@ -249,16 +251,12 @@ class Calc extends React.Component {
                         // name='teamArraySelect2'
                         value={teamArraySelect2}
                         handleChange={this.handleBrandSelection}
-                        handleChange2={this.handleAddToTrade}
-                        />
-                    <br />
-                    <TradeList
-                        teamTradeArr={teamTradeArr2}
-                        handleCloseButton={this.handleRemoveFromList}
+                        handleChange2={this.handleAddToTrade2}
                     />
+                    {/* <br />
                     <br />
                     <br />
-                    <br />
+                    <br /> */}
                 </div>
             </div>
 
@@ -268,3 +266,15 @@ class Calc extends React.Component {
 
 export default Calc
 
+
+
+/*
+THINGS TO ADD:
+
+Salary thru SQL
+Complete trade feature 
+
+Possible Adds:
+Team cap
+Get More Team Info
+*/

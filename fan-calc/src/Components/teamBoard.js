@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { Route, Link, Switch } from "react-router-dom";
 
 
-const TeamBoard = ({ teamsArr, value , handleChange,teamState }) => {
+const TeamBoard = ({ teamsArr, value , handleChange,handleChange2, teamState }) => {
     return (
-        <div className='main_container'><br />
-            <label>
+        <div className=''><br />
+            {/* <label> */}
                 <select 
                     
                     // value={value}
@@ -17,23 +17,37 @@ const TeamBoard = ({ teamsArr, value , handleChange,teamState }) => {
                     ))}
                 </select>
                 <br/>
+            
                 Players<br />
                 {/* <ul> */}
-                    {teamState.map(item => (
+                    {teamState.map((item, index) => (
                         // <li>
-                            <button>
-                                {item[0]}<br />
+                            <button 
+                            value={index} 
+                            onClick={handleChange2}>
+                            
+                                {/* {item[0]}<br />
                                 {item[1]}<br />
-                                {item[2]}<br />
+                                {item[2]}<br /> */}
                                 {item[3]}<br />
                                 {item[4]}<br />
                             </button>
                         // </li>
-                    ))}
+                        
+                    ))}<br/>
+                    {/* {''} Trading {''} */}
+                    {/* {teamTradeArr2.map( player => {
+                    <ul>
+                        <li>
+                            {player[0]}
+                        </li>
+                    </ul>
+
+                    })} */}
                 {/* </ul> */}
-            </label>
-            <br />
-            <br />
+            {/* </label> */}
+            {/* <br />
+            <br /> */}
         </div>
     )
 }

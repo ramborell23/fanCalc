@@ -19,7 +19,6 @@ const TradeList = ({ teamTradeArr, handleCloseButton }) => {
             </ul>
             <br />
             <div>
-                mlmlm
             </div>
         </div>
     )

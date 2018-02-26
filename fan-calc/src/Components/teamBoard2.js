@@ -16,38 +16,24 @@ const TeamBoard2 = ({ teamsArr, tradeArr,teamTradeArr2, value , handleChange,tea
                         <option value={option}>{option}</option>
                     ))}
                 </select>
-                <br/>
-            
+                <br/>   
                 Players<br />
                 {/* <ul> */}
                     {teamState.map((item, index) => (
-                        // <li>
+                        <li>
                             <button 
                             value={index} 
                             onClick={handleChange2}>
                             
-                                {item[0]}<br />
-                                {item[1]}<br />
-                                {item[2]}<br />
                                 {item[3]}<br />
-                                {item[4]}<br />
+                                {item[11]}<br />
+                                {item[5]}<br />
+                                {item[6]}<br />
                             </button>
-                        // </li>
+                        </li>
                         
                     ))}<br/>
-                    {/* {''} Trading {''} */}
-                    {/* {teamTradeArr2.map( player => {
-                    <ul>
-                        <li>
-                            {player[0]}
-                        </li>
-                    </ul>
-
-                    })} */}
-                {/* </ul> */}
-            {/* </label> */}
-            {/* <br />
-            <br /> */}
+               
         </div>
     )
 }
